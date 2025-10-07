@@ -1,0 +1,149 @@
+name: 🎓 Adicionar Nova Atividade
+description: Solicitar a criação de uma nova atividade extracurricular no sistema
+title: "[ATIVIDADE] Adicionar nova atividade: "
+labels: ["enhancement", "atividade"]
+assignees:
+  - copilot
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Adicionar Nova Atividade
+        Use este formulário para solicitar a adição de uma nova atividade extracurricular ao sistema.
+
+  - type: input
+    id: activity-name
+    attributes:
+      label: Nome da Atividade
+      description: Qual é o nome da nova atividade?
+      placeholder: "Ex: Clube de Robótica, Aula de Yoga, Time de Vôlei"
+    validations:
+      required: true
+
+  - type: textarea
+    id: activity-description
+    attributes:
+      label: Descrição da Atividade
+      description: Descreva brevemente o que é a atividade e o que os estudantes farão
+      placeholder: "Ex: Aulas práticas de robótica onde os alunos aprendem a construir e programar robôs usando kits LEGO Mindstorms"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: activity-type
+    attributes:
+      label: Categoria da Atividade
+      description: Selecione a categoria que melhor descreve esta atividade
+      options:
+        - Esportes (SPORTS)
+        - Artes (ARTS)
+        - Acadêmico (ACADEMIC)
+        - Tecnologia (TECHNOLOGY)
+        - Música (MUSIC)
+        - Teatro (DRAMA)
+        - Mangá/Anime (MANGA)
+        - Clube (CLUB)
+        - Outro
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: days-of-week
+    attributes:
+      label: Dias da Semana
+      description: Em quais dias a atividade ocorrerá?
+      options:
+        - label: Segunda-feira (Monday)
+        - label: Terça-feira (Tuesday)
+        - label: Quarta-feira (Wednesday)
+        - label: Quinta-feira (Thursday)
+        - label: Sexta-feira (Friday)
+        - label: Sábado (Saturday)
+        - label: Domingo (Sunday)
+
+  - type: input
+    id: start-time
+    attributes:
+      label: Horário de Início
+      description: Que horas a atividade começa? (formato 24h)
+      placeholder: "Ex: 15:30"
+    validations:
+      required: true
+
+  - type: input
+    id: end-time
+    attributes:
+      label: Horário de Término
+      description: Que horas a atividade termina? (formato 24h)
+      placeholder: "Ex: 17:00"
+    validations:
+      required: true
+
+  - type: input
+    id: max-participants
+    attributes:
+      label: Capacidade Máxima
+      description: Qual é o número máximo de estudantes que podem participar?
+      placeholder: "Ex: 20"
+    validations:
+      required: true
+
+  - type: textarea
+    id: initial-participants
+    attributes:
+      label: Participantes Iniciais (Opcional)
+      description: Liste os emails dos estudantes já inscritos (um por linha)
+      placeholder: |
+        student1@mergington.edu
+        student2@mergington.edu
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Informações Adicionais
+      description: Alguma informação adicional relevante sobre a atividade?
+      placeholder: "Ex: Necessário trazer material específico, pré-requisitos, etc."
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        ### 📋 Critérios de Aceitação
+
+        A atividade será adicionada ao sistema quando:
+        - ✅ A nova atividade aparecer na listagem de atividades
+        - ✅ Todos os detalhes fornecidos estiverem corretos (nome, descrição, horário, capacidade)
+        - ✅ A categoria/tipo da atividade estiver configurada corretamente
+        - ✅ Os participantes iniciais (se fornecidos) estiverem inscritos
+        - ✅ A atividade for persistida no banco de dados MongoDB
+        - ✅ Os testes existentes continuarem passando
+
+        ### 🔧 Informações Técnicas para o Agente Copilot
+
+        **Arquivos a modificar:**
+        - `src/main/java/com/mergingtonhigh/schoolmanagement/infrastructure/migrations/` - Criar nova migration ou modificar V001
+        - `src/main/java/com/mergingtonhigh/schoolmanagement/domain/valueobjects/ActivityType.java` - Verificar se o tipo existe
+
+        **Padrão a seguir:**
+        ```java
+        Activity newActivity = new Activity(
+            "Nome da Atividade",
+            "Descrição",
+            "Formato legível do horário",
+            new ScheduleDetails(List.of("Monday", "Wednesday"), LocalTime.of(15, 30), LocalTime.of(17, 0)),
+            capacidadeMaxima,
+            ActivityType.APPROPRIATE_TYPE
+        );
+        newActivity.setParticipants(List.of("email1@mergington.edu"));
+        mongoTemplate.save(newActivity);
+        ```
+
+        **Validações necessárias:**
+        - Nome não pode ser vazio
+        - Horário de término deve ser após horário de início
+        - Capacidade máxima deve ser > 0
+        - Emails devem ser válidos (formato @mergington.edu)

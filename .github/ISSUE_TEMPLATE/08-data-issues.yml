@@ -1,0 +1,219 @@
+name: 📊 Problemas com Dados ou Relatórios
+description: Reportar dados incorretos ou problemas com informações exibidas
+title: "[DADOS] "
+labels: ["bug", "data"]
+assignees:
+  - copilot
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Problemas com Dados ou Relatórios
+        Use este formulário para reportar dados incorretos, incompletos ou inconsistentes no sistema.
+
+  - type: dropdown
+    id: data-type
+    attributes:
+      label: Tipo de Dado Afetado
+      description: Qual tipo de informação está incorreta?
+      options:
+        - Informações de Atividade (nome, descrição, horário)
+        - Lista de Participantes
+        - Capacidade/Vagas
+        - Horários e Dias da Semana
+        - Informações de Professor
+        - Categorias de Atividades
+        - Dados de Autenticação
+        - Outro
+    validations:
+      required: true
+
+  - type: input
+    id: activity-name
+    attributes:
+      label: Nome da Atividade Afetada
+      description: Qual atividade tem dados incorretos? (se aplicável)
+      placeholder: "Ex: Chess Club, Art Club, Programming Class"
+    validations:
+      required: false
+
+  - type: textarea
+    id: incorrect-data
+    attributes:
+      label: Dados Incorretos/Atuais
+      description: Quais dados estão errados atualmente?
+      placeholder: |
+        Ex:
+        - Horário mostrado: 14:30 - 16:00
+        - Capacidade mostrada: 15 vagas
+        - Participantes: lista vazia
+    validations:
+      required: true
+
+  - type: textarea
+    id: correct-data
+    attributes:
+      label: Dados Corretos/Esperados
+      description: Quais dados deveriam estar sendo exibidos?
+      placeholder: |
+        Ex:
+        - Horário correto: 15:30 - 17:00
+        - Capacidade correta: 20 vagas
+        - Participantes: deveria ter 5 estudantes
+    validations:
+      required: true
+
+  - type: dropdown
+    id: data-source
+    attributes:
+      label: Onde os Dados Estão Incorretos
+      description: Onde você está vendo os dados incorretos?
+      options:
+        - Interface Web (Frontend)
+        - Banco de Dados
+        - API Response
+        - Em múltiplos lugares
+        - Não tenho certeza
+    validations:
+      required: true
+
+  - type: textarea
+    id: when-noticed
+    attributes:
+      label: Quando Foi Notado
+      description: Quando você percebeu este problema? Sempre foi assim ou mudou recentemente?
+      placeholder: "Ex: Os dados estavam corretos ontem, mas hoje pela manhã já estavam errados"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: consistency
+    attributes:
+      label: Consistência
+      description: Este problema é consistente ou intermitente?
+      options:
+        - Sempre mostra dados incorretos
+        - Às vezes mostra correto, às vezes incorreto
+        - Dados mudaram uma vez e ficaram errados
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impacto
+      description: Como isso está afetando o uso do sistema?
+      placeholder: "Ex: Professores não conseguem saber quem está inscrito, estudantes veem horários errados"
+    validations:
+      required: true
+
+  - type: textarea
+    id: recent-changes
+    attributes:
+      label: Mudanças Recentes
+      description: Alguma mudança foi feita recentemente que possa estar relacionada?
+      placeholder: "Ex: Foi adicionada uma nova atividade ontem, foi feita alteração de horário"
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Contexto Adicional
+      description: Qualquer outra informação relevante
+      placeholder: "Screenshots, exemplos, observações adicionais"
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        ### 📋 Critérios de Aceitação
+
+        O problema será considerado resolvido quando:
+        - ✅ A fonte dos dados incorretos for identificada
+        - ✅ Os dados forem corrigidos para os valores esperados
+        - ✅ A correção for persistida no banco de dados
+        - ✅ Os dados corretos aparecerem na interface web
+        - ✅ Os dados corretos forem retornados pela API
+        - ✅ A consistência dos dados for verificada
+        - ✅ Medidas preventivas forem implementadas (se aplicável)
+
+        ### 🔧 Informações Técnicas para o Agente Copilot
+
+        **Camadas de Dados:**
+        1. **Seed Data (Migration)**: `infrastructure/migrations/V001_InitialDatabaseSetup.java`
+        2. **Database**: MongoDB - verificar documentos diretamente
+        3. **Domain Entities**: Como os dados são modelados (`domain/entities/`)
+        4. **DTOs**: Como os dados são transferidos (`application/dtos/`)
+        5. **API Response**: O que é retornado pelos controllers
+        6. **Frontend Display**: Como é renderizado no JavaScript
+
+        **Diagnóstico Sistemático:**
+        ```bash
+        # 1. Verificar dados no MongoDB
+        # Conectar ao MongoDB e inspecionar documentos
+
+        # 2. Verificar migration/seed data
+        # Arquivo: V001_InitialDatabaseSetup.java
+
+        # 3. Verificar endpoint da API
+        # GET /activities ou GET /activities/{name}
+
+        # 4. Verificar transformação Entity → DTO
+        # Arquivo: ActivityMapper.java
+
+        # 5. Verificar renderização no frontend
+        # Arquivo: app.js - função renderActivityCard()
+        ```
+
+        **Problemas Comuns de Dados:**
+
+        1. **Horários Incorretos**:
+           - Verificar `ScheduleDetails` - `startTime` e `endTime` são `LocalTime`
+           - Formato correto: `LocalTime.of(15, 30)` para 15:30
+
+        2. **Participantes Incorretos**:
+           - Verificar lista em `Activity.setParticipants(List.of(...))`
+           - Emails devem ser válidos e formato @mergington.edu
+
+        3. **Capacidade Incorreta**:
+           - Verificar `maxParticipants` no construtor de Activity
+           - Deve ser > 0
+
+        4. **Tipo/Categoria Incorreta**:
+           - Verificar `ActivityType` enum
+           - Tipos: SPORTS, ARTS, ACADEMIC, TECHNOLOGY, MUSIC, DRAMA, MANGA, CLUB
+
+        5. **Dias da Semana Incorretos**:
+           - Verificar `ScheduleDetails` - lista de dias
+           - Formato: List.of("Monday", "Wednesday", "Friday")
+           - Valores válidos: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
+
+        **Correção de Dados:**
+        ```java
+        // Localizar e atualizar atividade na migration
+        Activity activity = new Activity(
+            "Nome Correto",
+            "Descrição Correta",
+            "Horário legível correto",
+            new ScheduleDetails(
+                List.of("Monday", "Wednesday"),  // Dias corretos
+                LocalTime.of(15, 30),            // Hora início correta
+                LocalTime.of(17, 0)              // Hora fim correta
+            ),
+            20,  // Capacidade correta
+            ActivityType.CORRETO
+        );
+        activity.setParticipants(List.of(
+            "student1@mergington.edu",
+            "student2@mergington.edu"
+        ));
+        mongoTemplate.save(activity);
+        ```
+
+        **Validação:**
+        - Executar aplicação e verificar dados via API: GET /activities
+        - Verificar interface web
+        - Confirmar persistência reiniciando a aplicação

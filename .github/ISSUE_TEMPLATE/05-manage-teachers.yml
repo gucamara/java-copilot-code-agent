@@ -1,0 +1,173 @@
+name: 🔐 Gerenciar Contas de Professores
+description: Adicionar, modificar ou remover contas de professores no sistema
+title: "[PROFESSOR] "
+labels: ["enhancement", "autenticação"]
+assignees:
+  - copilot
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Gerenciar Contas de Professores
+        Use este formulário para gerenciar contas de professores e suas permissões.
+
+  - type: dropdown
+    id: action
+    attributes:
+      label: Ação Desejada
+      description: O que você deseja fazer?
+      options:
+        - Adicionar novo professor
+        - Modificar professor existente
+        - Remover professor
+        - Resetar senha
+    validations:
+      required: true
+
+  - type: input
+    id: username
+    attributes:
+      label: Username do Professor
+      description: Qual é o username (login) do professor?
+      placeholder: "Ex: teacher.silva, teacher.santos, admin"
+    validations:
+      required: true
+
+  - type: input
+    id: full-name
+    attributes:
+      label: Nome Completo
+      description: Nome completo do professor (para nova conta ou modificação)
+      placeholder: "Ex: Maria Silva, João Santos"
+    validations:
+      required: false
+
+  - type: input
+    id: email
+    attributes:
+      label: Email do Professor
+      description: Email institucional do professor (para nova conta ou modificação)
+      placeholder: "Ex: maria.silva@mergington.edu"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: role
+    attributes:
+      label: Função/Permissão
+      description: Qual o nível de acesso do professor?
+      options:
+        - TEACHER (Professor padrão)
+        - ADMIN (Administrador)
+    validations:
+      required: false
+
+  - type: input
+    id: password
+    attributes:
+      label: Senha Inicial (apenas para novos professores)
+      description: Senha temporária para o primeiro acesso. Professor deverá alterá-la posteriormente.
+      placeholder: "Use uma senha temporária segura"
+    validations:
+      required: false
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: Motivo da Mudança
+      description: Por que esta alteração é necessária?
+      placeholder: "Ex: Novo professor contratado, professor deixou a escola, mudança de função"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Informações Adicionais
+      description: Qualquer outra informação relevante
+      placeholder: "Ex: Áreas de responsabilidade, atividades que o professor gerenciará"
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        ### 📋 Critérios de Aceitação
+
+        O gerenciamento de conta será considerado completo quando:
+        - ✅ Para adição: Nova conta de professor criada com username, nome, email e role corretos
+        - ✅ Para adição: Senha criptografada usando Argon2 via BouncyCastle
+        - ✅ Para modificação: Dados do professor atualizados conforme solicitado
+        - ✅ Para remoção: Conta do professor removida do sistema
+        - ✅ Para reset de senha: Nova senha criptografada e configurada
+        - ✅ O professor consegue fazer login com as credenciais corretas
+        - ✅ As mudanças são persistidas no banco de dados MongoDB
+        - ✅ Os testes existentes continuam passando
+
+        ### 🔧 Informações Técnicas para o Agente Copilot
+
+        **Arquivos a modificar:**
+        - `src/main/java/com/mergingtonhigh/schoolmanagement/infrastructure/migrations/V001_InitialDatabaseSetup.java` - Gerenciar dados seed de professores
+
+        **Padrão de código para adicionar professor:**
+        ```java
+        // A senha deve ser obtida de variável de ambiente ou usar valor padrão seguro
+        String password = System.getenv("TEACHER_NOME_PASSWORD");
+        if (password == null || password.isEmpty()) {
+            password = "senha_temporaria_segura_123!";
+        }
+
+        Teacher teacher = new Teacher(
+            "username",
+            passwordEncoder.encode(password),
+            "Nome Completo",
+            "email@mergington.edu",
+            Role.TEACHER  // ou Role.ADMIN
+        );
+        mongoTemplate.save(teacher);
+        ```
+
+        **Padrão de código para modificar professor:**
+        ```java
+        // Buscar professor existente
+        Teacher teacher = mongoTemplate.findOne(
+            Query.query(Criteria.where("username").is("username_existente")),
+            Teacher.class
+        );
+
+        // Modificar campos necessários
+        teacher.setFullName("Novo Nome");
+        teacher.setEmail("novoemail@mergington.edu");
+        teacher.setRole(Role.ADMIN);
+
+        // Se resetar senha
+        teacher.setPassword(passwordEncoder.encode("nova_senha"));
+
+        mongoTemplate.save(teacher);
+        ```
+
+        **Padrão de código para remover professor:**
+        ```java
+        mongoTemplate.remove(
+            Query.query(Criteria.where("username").is("username_para_remover")),
+            Teacher.class
+        );
+        ```
+
+        **Validações necessárias:**
+        - Username deve ser único
+        - Email deve ter formato válido e domínio @mergington.edu
+        - Senha deve ser criptografada usando `passwordEncoder.encode()`
+        - Role deve ser TEACHER ou ADMIN
+        - Ao remover, verificar se não há dependências críticas
+
+        **Segurança:**
+        - NUNCA armazenar senhas em texto plano
+        - SEMPRE usar `passwordEncoder.encode()` para criptografar senhas
+        - Preferir variáveis de ambiente para senhas padrão
+        - Usar senhas temporárias fortes que devem ser alteradas no primeiro login
+
+        **Entidade Teacher:**
+        - Localizada em: `src/main/java/com/mergingtonhigh/schoolmanagement/domain/entities/Teacher.java`
+        - PasswordEncoder configurado em: `src/main/java/com/mergingtonhigh/schoolmanagement/infrastructure/config/SecurityConfig.java`
