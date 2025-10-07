@@ -10,7 +10,7 @@ body:
       value: |
         ## Adicionar Nova Atividade
         Use este formulário para solicitar a adição de uma nova atividade extracurricular ao sistema.
-        
+
   - type: input
     id: activity-name
     attributes:
@@ -113,7 +113,7 @@ body:
       value: |
         ---
         ### 📋 Critérios de Aceitação
-        
+
         A atividade será adicionada ao sistema quando:
         - ✅ A nova atividade aparecer na listagem de atividades
         - ✅ Todos os detalhes fornecidos estiverem corretos (nome, descrição, horário, capacidade)
@@ -121,13 +121,13 @@ body:
         - ✅ Os participantes iniciais (se fornecidos) estiverem inscritos
         - ✅ A atividade for persistida no banco de dados MongoDB
         - ✅ Os testes existentes continuarem passando
-        
+
         ### 🔧 Informações Técnicas para o Agente Copilot
-        
+
         **Arquivos a modificar:**
         - `src/main/java/com/mergingtonhigh/schoolmanagement/infrastructure/migrations/` - Criar nova migration ou modificar V001
         - `src/main/java/com/mergingtonhigh/schoolmanagement/domain/valueobjects/ActivityType.java` - Verificar se o tipo existe
-        
+
         **Padrão a seguir:**
         ```java
         Activity newActivity = new Activity(
@@ -141,7 +141,7 @@ body:
         newActivity.setParticipants(List.of("email1@mergington.edu"));
         mongoTemplate.save(newActivity);
         ```
-        
+
         **Validações necessárias:**
         - Nome não pode ser vazio
         - Horário de término deve ser após horário de início

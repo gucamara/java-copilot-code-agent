@@ -10,7 +10,7 @@ body:
       value: |
         ## Solicitar Nova Funcionalidade
         Use este formulário para propor novas funcionalidades ou melhorias significativas no sistema.
-        
+
   - type: dropdown
     id: feature-area
     attributes:
@@ -62,7 +62,7 @@ body:
       label: Solução Proposta
       description: Como você imagina que esta funcionalidade funcionaria?
       placeholder: |
-        Ex: 
+        Ex:
         1. Botão "Exportar" em cada atividade
         2. Ao clicar, gera arquivo CSV com nome, email, data de inscrição
         3. Download automático do arquivo
@@ -105,9 +105,9 @@ body:
         - [ ] Download funciona em todos navegadores principais
         - [ ] Dados exportados são precisos
       value: |
-        - [ ] 
-        - [ ] 
-        - [ ] 
+        - [ ]
+        - [ ]
+        - [ ]
     validations:
       required: true
 
@@ -138,7 +138,7 @@ body:
       label: Notas Técnicas (Opcional)
       description: Se você tem ideias sobre a implementação técnica, compartilhe aqui
       placeholder: |
-        Ex: 
+        Ex:
         - Poderia usar biblioteca Apache Commons CSV
         - Adicionar endpoint GET /activities/{name}/export
         - Frontend faz chamada e dispara download
@@ -150,7 +150,7 @@ body:
       value: |
         ---
         ### 📋 Critérios de Aceitação Padrão
-        
+
         A funcionalidade será considerada completa quando:
         - ✅ Todos os critérios de aceitação específicos forem atendidos
         - ✅ A funcionalidade for testada manualmente e funcionar conforme esperado
@@ -159,30 +159,30 @@ body:
         - ✅ O código seguir os padrões arquiteturais do projeto (Clean Architecture)
         - ✅ Os testes existentes continuarem passando
         - ✅ Não houver regressão em funcionalidades existentes
-        
+
         ### 🔧 Informações Técnicas para o Agente Copilot
-        
+
         **Princípios de Implementação:**
         - Seguir Clean Architecture: Domain → Application → Infrastructure → Presentation
         - Adicionar validações na camada de Domain quando aplicável
         - Criar casos de uso na camada Application para orquestrar lógica
         - Implementar endpoints REST na camada Presentation
         - Usar DTOs para comunicação externa
-        
+
         **Estrutura de Implementação:**
         1. **Domain**: Adicionar entidades, value objects ou métodos de domínio necessários
         2. **Application**: Criar ou modificar casos de uso (UseCases) e DTOs
         3. **Infrastructure**: Adicionar configurações, migrations ou implementações de repositório
         4. **Presentation**: Criar/modificar controllers e mappers
         5. **Frontend**: Atualizar HTML/CSS/JS em `src/main/resources/static/`
-        
+
         **Padrões de Código:**
         - Injeção de dependência via construtor
         - Validações auto-contidas em entities e value objects
         - Retorno de ResponseEntity<?> em controllers
         - Uso de Map.of("detail", message) para erros
         - Testes com JUnit 5 e Mockito
-        
+
         **Checklist de Implementação:**
         - [ ] Camada Domain modificada/criada
         - [ ] Caso de uso implementado

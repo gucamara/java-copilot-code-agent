@@ -10,7 +10,7 @@ body:
       value: |
         ## Reportar Bug ou Problema
         Use este formulário para reportar problemas, erros ou comportamentos inesperados no sistema.
-        
+
   - type: dropdown
     id: bug-area
     attributes:
@@ -51,9 +51,9 @@ body:
         4. Inserir email do estudante
         5. Observar erro
       value: |
-        1. 
-        2. 
-        3. 
+        1.
+        2.
+        3.
     validations:
       required: true
 
@@ -109,7 +109,7 @@ body:
       placeholder: |
         Console do navegador:
         Error: ...
-        
+
         Ou mensagem na tela:
         "Erro ao processar solicitação"
       render: shell
@@ -163,7 +163,7 @@ body:
       value: |
         ---
         ### 📋 Critérios de Aceitação
-        
+
         O bug será considerado resolvido quando:
         - ✅ O problema for identificado e a causa raiz determinada
         - ✅ A correção for implementada seguindo as boas práticas do projeto
@@ -171,9 +171,9 @@ body:
         - ✅ Testes forem adicionados para prevenir regressão (se aplicável)
         - ✅ Os testes existentes continuarem passando
         - ✅ A correção for validada manualmente seguindo os passos de reprodução
-        
+
         ### 🔧 Informações Técnicas para o Agente Copilot
-        
+
         **Abordagem de Diagnóstico:**
         1. Reproduzir o problema seguindo os passos fornecidos
         2. Examinar logs e mensagens de erro
@@ -181,20 +181,20 @@ body:
         4. Localizar o código responsável pelo comportamento incorreto
         5. Implementar correção mínima necessária
         6. Adicionar testes para validar a correção
-        
+
         **Áreas Comuns de Bugs:**
         - **Validação**: `domain/entities/`, `domain/valueobjects/`
         - **Lógica de negócio**: `application/usecases/`
         - **API**: `presentation/controllers/`
         - **Dados**: `infrastructure/migrations/`, `infrastructure/persistence/`
         - **Frontend**: `src/main/resources/static/app.js`, `style.css`, `index.html`
-        
+
         **Padrões de Erro Comuns:**
         - Validação incorreta de Email (Email.java)
         - Verificação de capacidade (Activity.java - addParticipant())
         - Autenticação de professor (UseCases que validam teacherUsername)
         - Formato de dados no frontend/backend
-        
+
         **Princípios para Correção:**
         - Fazer mudanças mínimas e cirúrgicas
         - Manter padrões arquiteturais (Clean Architecture)

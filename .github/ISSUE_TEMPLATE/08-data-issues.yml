@@ -10,7 +10,7 @@ body:
       value: |
         ## Problemas com Dados ou Relatórios
         Use este formulário para reportar dados incorretos, incompletos ou inconsistentes no sistema.
-        
+
   - type: dropdown
     id: data-type
     attributes:
@@ -43,7 +43,7 @@ body:
       label: Dados Incorretos/Atuais
       description: Quais dados estão errados atualmente?
       placeholder: |
-        Ex: 
+        Ex:
         - Horário mostrado: 14:30 - 16:00
         - Capacidade mostrada: 15 vagas
         - Participantes: lista vazia
@@ -130,7 +130,7 @@ body:
       value: |
         ---
         ### 📋 Critérios de Aceitação
-        
+
         O problema será considerado resolvido quando:
         - ✅ A fonte dos dados incorretos for identificada
         - ✅ Os dados forem corrigidos para os valores esperados
@@ -139,9 +139,9 @@ body:
         - ✅ Os dados corretos forem retornados pela API
         - ✅ A consistência dos dados for verificada
         - ✅ Medidas preventivas forem implementadas (se aplicável)
-        
+
         ### 🔧 Informações Técnicas para o Agente Copilot
-        
+
         **Camadas de Dados:**
         1. **Seed Data (Migration)**: `infrastructure/migrations/V001_InitialDatabaseSetup.java`
         2. **Database**: MongoDB - verificar documentos diretamente
@@ -149,48 +149,48 @@ body:
         4. **DTOs**: Como os dados são transferidos (`application/dtos/`)
         5. **API Response**: O que é retornado pelos controllers
         6. **Frontend Display**: Como é renderizado no JavaScript
-        
+
         **Diagnóstico Sistemático:**
         ```bash
         # 1. Verificar dados no MongoDB
         # Conectar ao MongoDB e inspecionar documentos
-        
+
         # 2. Verificar migration/seed data
         # Arquivo: V001_InitialDatabaseSetup.java
-        
+
         # 3. Verificar endpoint da API
         # GET /activities ou GET /activities/{name}
-        
+
         # 4. Verificar transformação Entity → DTO
         # Arquivo: ActivityMapper.java
-        
+
         # 5. Verificar renderização no frontend
         # Arquivo: app.js - função renderActivityCard()
         ```
-        
+
         **Problemas Comuns de Dados:**
-        
+
         1. **Horários Incorretos**:
            - Verificar `ScheduleDetails` - `startTime` e `endTime` são `LocalTime`
            - Formato correto: `LocalTime.of(15, 30)` para 15:30
-        
+
         2. **Participantes Incorretos**:
            - Verificar lista em `Activity.setParticipants(List.of(...))`
            - Emails devem ser válidos e formato @mergington.edu
-        
+
         3. **Capacidade Incorreta**:
            - Verificar `maxParticipants` no construtor de Activity
            - Deve ser > 0
-        
+
         4. **Tipo/Categoria Incorreta**:
            - Verificar `ActivityType` enum
            - Tipos: SPORTS, ARTS, ACADEMIC, TECHNOLOGY, MUSIC, DRAMA, MANGA, CLUB
-        
+
         5. **Dias da Semana Incorretos**:
            - Verificar `ScheduleDetails` - lista de dias
            - Formato: List.of("Monday", "Wednesday", "Friday")
            - Valores válidos: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
-        
+
         **Correção de Dados:**
         ```java
         // Localizar e atualizar atividade na migration
@@ -212,7 +212,7 @@ body:
         ));
         mongoTemplate.save(activity);
         ```
-        
+
         **Validação:**
         - Executar aplicação e verificar dados via API: GET /activities
         - Verificar interface web

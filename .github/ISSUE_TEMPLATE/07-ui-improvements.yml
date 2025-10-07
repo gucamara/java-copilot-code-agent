@@ -10,7 +10,7 @@ body:
       value: |
         ## Melhorias na Interface
         Use este formulário para sugerir melhorias na interface web, design ou experiência do usuário.
-        
+
   - type: dropdown
     id: improvement-type
     attributes:
@@ -142,7 +142,7 @@ body:
       value: |
         ---
         ### 📋 Critérios de Aceitação
-        
+
         A melhoria será considerada completa quando:
         - ✅ As mudanças visuais/de usabilidade forem implementadas
         - ✅ A melhoria funcionar em todos os navegadores principais (Chrome, Firefox, Safari, Edge)
@@ -150,21 +150,21 @@ body:
         - ✅ Não houver quebra de funcionalidades existentes
         - ✅ O design permanecer consistente com o resto da interface
         - ✅ A acessibilidade não for comprometida (e idealmente for melhorada)
-        
+
         ### 🔧 Informações Técnicas para o Agente Copilot
-        
+
         **Arquivos Frontend:**
         - `src/main/resources/static/index.html` - Estrutura HTML
         - `src/main/resources/static/style.css` - Estilos CSS
         - `src/main/resources/static/app.js` - Funcionalidades JavaScript
-        
+
         **Estrutura Atual:**
         - **Frameworks**: Vanilla JavaScript (sem frameworks)
         - **CSS**: CSS puro, sem preprocessadores
         - **Layout**: Flexbox e Grid em algumas áreas
         - **Responsividade**: Media queries para diferentes tamanhos de tela
         - **Temas**: Variáveis CSS para cores principais
-        
+
         **Padrões de CSS:**
         ```css
         /* Variáveis de cores */
@@ -176,31 +176,31 @@ body:
           --text-color: #333;
           --bg-color: #f5f5f5;
         }
-        
+
         /* Media queries */
         @media (max-width: 768px) {
           /* Tablet styles */
         }
-        
+
         @media (max-width: 480px) {
           /* Mobile styles */
         }
         ```
-        
+
         **Elementos Principais:**
         - `.activity-card` - Cartões de atividades
         - `.modal` - Modais de login e inscrição
         - `.filters-container` - Área de filtros
         - `.message` - Mensagens de feedback
         - `.activity-card-actions` - Botões de ação
-        
+
         **Princípios de Design:**
         - Manter consistência visual em todo o sistema
         - Garantir acessibilidade (contraste, navegação por teclado)
         - Responsividade mobile-first quando possível
         - Feedback visual claro para ações do usuário
         - Carregamento progressivo com skeletons
-        
+
         **Testes Recomendados:**
         - Testar em Chrome, Firefox, Safari, Edge
         - Testar em diferentes resoluções (320px, 768px, 1024px, 1920px)
