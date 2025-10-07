@@ -9,7 +9,8 @@ public enum ActivityType {
     ARTS("Artes", "#f3e5f5", "#7b1fa2"),
     ACADEMIC("Acadêmico", "#e3f2fd", "#1565c0"),
     COMMUNITY("Comunidade", "#fff3e0", "#e65100"),
-    TECHNOLOGY("Tecnologia", "#e8eaf6", "#3949ab");
+    TECHNOLOGY("Tecnologia", "#e8eaf6", "#3949ab"),
+    MANGA("Mangá", "#fce4ec", "#c2185b");
 
     private final String label;
     private final String color;
@@ -77,6 +78,12 @@ public enum ActivityType {
                 containsAny(lowerDesc, "programação", "tecnologia", "digital", "robô", "programming", "technology",
                         "robot")) {
             return TECHNOLOGY;
+        }
+
+        // Manga keywords
+        if (containsAny(lowerName, "mangá", "manga", "anime", "quadrinhos japoneses") ||
+                containsAny(lowerDesc, "mangá", "manga", "anime", "desenho japonês", "japanese comics")) {
+            return MANGA;
         }
 
         return ACADEMIC; // Default fallback
