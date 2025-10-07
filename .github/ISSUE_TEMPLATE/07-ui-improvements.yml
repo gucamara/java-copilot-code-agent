@@ -1,0 +1,208 @@
+name: 🎨 Melhorias na Interface
+description: Sugestões de melhorias visuais ou de usabilidade na interface web
+title: "[UI/UX] "
+labels: ["enhancement", "ui/ux", "frontend"]
+assignees:
+  - copilot
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Melhorias na Interface
+        Use este formulário para sugerir melhorias na interface web, design ou experiência do usuário.
+        
+  - type: dropdown
+    id: improvement-type
+    attributes:
+      label: Tipo de Melhoria
+      description: Qual tipo de melhoria você está sugerindo?
+      options:
+        - Visual/Design - Cores, fontes, layout
+        - Usabilidade - Facilidade de uso
+        - Acessibilidade - Leitores de tela, contraste, navegação por teclado
+        - Responsividade - Melhor visualização em diferentes tamanhos de tela
+        - Performance - Velocidade de carregamento
+        - Feedback ao Usuário - Mensagens, indicadores de carregamento
+        - Navegação - Estrutura e fluxo
+        - Outra
+    validations:
+      required: true
+
+  - type: dropdown
+    id: page-section
+    attributes:
+      label: Página/Seção Afetada
+      description: Onde esta melhoria se aplica?
+      options:
+        - Página Principal (Listagem de Atividades)
+        - Cartões de Atividades
+        - Modal de Login
+        - Modal de Inscrição
+        - Filtros de Atividades
+        - Cabeçalho/Navegação
+        - Mensagens de Feedback
+        - Todo o Sistema
+        - Outra
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-state
+    attributes:
+      label: Estado Atual
+      description: Como está atualmente? O que você acha que pode melhorar?
+      placeholder: "Ex: Os botões de ação ficam muito pequenos em telas de celular e são difíceis de clicar"
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-improvement
+    attributes:
+      label: Melhoria Proposta
+      description: Como você sugere que seja melhorado?
+      placeholder: "Ex: Aumentar o tamanho dos botões em telas menores e adicionar mais espaçamento entre eles"
+    validations:
+      required: true
+
+  - type: textarea
+    id: benefits
+    attributes:
+      label: Benefícios
+      description: Como isso melhoraria a experiência dos usuários?
+      placeholder: "Ex: Facilitaria o uso em tablets e smartphones, reduzindo cliques acidentais"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: devices-affected
+    attributes:
+      label: Dispositivos Afetados
+      description: Em quais dispositivos este problema/melhoria é mais relevante?
+      options:
+        - Desktop/Notebook
+        - Tablet
+        - Smartphone
+        - Todos os dispositivos
+    validations:
+      required: false
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Exemplos ou Referências
+      description: Tem exemplos de outros sites ou mockups? Pode anexar screenshots.
+      placeholder: "Cole URLs de exemplos ou descreva referências visuais"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Impacto na Usabilidade
+      description: Qual o impacto desta melhoria?
+      options:
+        - Alto - Dificulta muito o uso do sistema
+        - Médio - Causa algum inconveniente
+        - Baixo - Pequeno polimento
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: specific-improvements
+    attributes:
+      label: Melhorias Específicas Sugeridas
+      description: Marque todas que se aplicam
+      options:
+        - label: Melhorar contraste de cores
+        - label: Aumentar tamanho de fontes
+        - label: Adicionar ícones para melhor identificação
+        - label: Melhorar feedback visual (hover, focus, active)
+        - label: Adicionar animações/transições
+        - label: Reorganizar layout
+        - label: Melhorar mensagens de erro/sucesso
+        - label: Adicionar indicadores de carregamento
+        - label: Melhorar responsividade mobile
+        - label: Outra (descrever acima)
+
+  - type: textarea
+    id: technical-suggestions
+    attributes:
+      label: Sugestões Técnicas (Opcional)
+      description: Se você tem ideias sobre como implementar, compartilhe
+      placeholder: |
+        Ex:
+        - Usar CSS Grid para melhor layout
+        - Adicionar media queries para tablets
+        - Usar variáveis CSS para cores consistentes
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        ### 📋 Critérios de Aceitação
+        
+        A melhoria será considerada completa quando:
+        - ✅ As mudanças visuais/de usabilidade forem implementadas
+        - ✅ A melhoria funcionar em todos os navegadores principais (Chrome, Firefox, Safari, Edge)
+        - ✅ A responsividade for testada em desktop, tablet e mobile
+        - ✅ Não houver quebra de funcionalidades existentes
+        - ✅ O design permanecer consistente com o resto da interface
+        - ✅ A acessibilidade não for comprometida (e idealmente for melhorada)
+        
+        ### 🔧 Informações Técnicas para o Agente Copilot
+        
+        **Arquivos Frontend:**
+        - `src/main/resources/static/index.html` - Estrutura HTML
+        - `src/main/resources/static/style.css` - Estilos CSS
+        - `src/main/resources/static/app.js` - Funcionalidades JavaScript
+        
+        **Estrutura Atual:**
+        - **Frameworks**: Vanilla JavaScript (sem frameworks)
+        - **CSS**: CSS puro, sem preprocessadores
+        - **Layout**: Flexbox e Grid em algumas áreas
+        - **Responsividade**: Media queries para diferentes tamanhos de tela
+        - **Temas**: Variáveis CSS para cores principais
+        
+        **Padrões de CSS:**
+        ```css
+        /* Variáveis de cores */
+        :root {
+          --primary-color: #4a90e2;
+          --secondary-color: #f39c12;
+          --success-color: #27ae60;
+          --danger-color: #e74c3c;
+          --text-color: #333;
+          --bg-color: #f5f5f5;
+        }
+        
+        /* Media queries */
+        @media (max-width: 768px) {
+          /* Tablet styles */
+        }
+        
+        @media (max-width: 480px) {
+          /* Mobile styles */
+        }
+        ```
+        
+        **Elementos Principais:**
+        - `.activity-card` - Cartões de atividades
+        - `.modal` - Modais de login e inscrição
+        - `.filters-container` - Área de filtros
+        - `.message` - Mensagens de feedback
+        - `.activity-card-actions` - Botões de ação
+        
+        **Princípios de Design:**
+        - Manter consistência visual em todo o sistema
+        - Garantir acessibilidade (contraste, navegação por teclado)
+        - Responsividade mobile-first quando possível
+        - Feedback visual claro para ações do usuário
+        - Carregamento progressivo com skeletons
+        
+        **Testes Recomendados:**
+        - Testar em Chrome, Firefox, Safari, Edge
+        - Testar em diferentes resoluções (320px, 768px, 1024px, 1920px)
+        - Validar acessibilidade com lighthouse/axe
+        - Verificar interatividade (hover, focus, active states)

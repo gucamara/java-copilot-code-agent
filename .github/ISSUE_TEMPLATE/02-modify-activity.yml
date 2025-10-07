@@ -1,0 +1,172 @@
+name: ✏️ Modificar Atividade Existente
+description: Solicitar alteração nos detalhes de uma atividade já cadastrada
+title: "[MODIFICAR] Atualizar atividade: "
+labels: ["enhancement", "atividade", "modificação"]
+assignees:
+  - copilot
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Modificar Atividade Existente
+        Use este formulário para solicitar mudanças em uma atividade que já existe no sistema.
+        
+  - type: input
+    id: activity-name
+    attributes:
+      label: Nome da Atividade a Modificar
+      description: Qual atividade você deseja modificar?
+      placeholder: "Ex: Chess Club, Art Club, Programming Class"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: what-to-change
+    attributes:
+      label: O que você deseja modificar?
+      description: Marque todos os itens que precisam ser alterados
+      options:
+        - label: Nome da atividade
+        - label: Descrição
+        - label: Dias da semana
+        - label: Horário
+        - label: Capacidade máxima
+        - label: Categoria/Tipo
+        - label: Outro (descreva abaixo)
+
+  - type: input
+    id: new-name
+    attributes:
+      label: Novo Nome (se aplicável)
+      description: Se estiver mudando o nome, qual será o novo nome?
+      placeholder: "Ex: Advanced Chess Club"
+    validations:
+      required: false
+
+  - type: textarea
+    id: new-description
+    attributes:
+      label: Nova Descrição (se aplicável)
+      description: Se estiver mudando a descrição, forneça a nova descrição completa
+      placeholder: "Ex: Clube de xadrez avançado para estudantes com experiência prévia"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: new-days
+    attributes:
+      label: Novos Dias da Semana (se aplicável)
+      description: Se estiver mudando os dias, marque os novos dias
+      options:
+        - label: Segunda-feira (Monday)
+        - label: Terça-feira (Tuesday)
+        - label: Quarta-feira (Wednesday)
+        - label: Quinta-feira (Thursday)
+        - label: Sexta-feira (Friday)
+        - label: Sábado (Saturday)
+        - label: Domingo (Sunday)
+
+  - type: input
+    id: new-start-time
+    attributes:
+      label: Novo Horário de Início (se aplicável)
+      description: Se estiver mudando o horário, forneça o novo horário de início (formato 24h)
+      placeholder: "Ex: 16:00"
+    validations:
+      required: false
+
+  - type: input
+    id: new-end-time
+    attributes:
+      label: Novo Horário de Término (se aplicável)
+      description: Se estiver mudando o horário, forneça o novo horário de término (formato 24h)
+      placeholder: "Ex: 18:00"
+    validations:
+      required: false
+
+  - type: input
+    id: new-capacity
+    attributes:
+      label: Nova Capacidade Máxima (se aplicável)
+      description: Se estiver mudando a capacidade, forneça o novo número máximo de participantes
+      placeholder: "Ex: 25"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: new-type
+    attributes:
+      label: Nova Categoria (se aplicável)
+      description: Se estiver mudando a categoria, selecione a nova
+      options:
+        - Não alterar
+        - Esportes (SPORTS)
+        - Artes (ARTS)
+        - Acadêmico (ACADEMIC)
+        - Tecnologia (TECHNOLOGY)
+        - Música (MUSIC)
+        - Teatro (DRAMA)
+        - Mangá/Anime (MANGA)
+        - Clube (CLUB)
+    validations:
+      required: false
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: Motivo da Mudança
+      description: Por que esta mudança é necessária?
+      placeholder: "Ex: Mudança de sala, aumento de demanda, ajuste de horário para evitar conflitos"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-changes
+    attributes:
+      label: Outras Mudanças
+      description: Descreva qualquer outra mudança necessária que não se enquadre nas opções acima
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        ### 📋 Critérios de Aceitação
+        
+        A modificação será considerada completa quando:
+        - ✅ A atividade existente for localizada no banco de dados
+        - ✅ Todas as alterações solicitadas forem aplicadas corretamente
+        - ✅ Os participantes já inscritos permanecerem inscritos (a menos que a capacidade seja reduzida)
+        - ✅ A atividade modificada aparecer corretamente na interface
+        - ✅ As mudanças forem persistidas no banco de dados MongoDB
+        - ✅ Os testes existentes continuarem passando
+        
+        ### 🔧 Informações Técnicas para o Agente Copilot
+        
+        **Arquivos a modificar:**
+        - `src/main/java/com/mergingtonhigh/schoolmanagement/infrastructure/migrations/V001_InitialDatabaseSetup.java` - Modificar dados seed
+        - Possível criação de nova migration se a atividade já estiver em produção
+        
+        **Abordagem:**
+        1. Localizar a atividade pelo nome atual no código de migration
+        2. Atualizar os campos especificados mantendo o padrão existente
+        3. Se estiver mudando o nome, certificar-se de que referências sejam atualizadas
+        4. Validar que a capacidade nova não seja menor que o número atual de participantes
+        
+        **Padrão de código:**
+        ```java
+        Activity activity = new Activity(
+            "Nome (novo ou existente)",
+            "Descrição (nova ou existente)",
+            "Formato legível do horário",
+            new ScheduleDetails(dias, horaInicio, horaFim),
+            capacidade,
+            ActivityType.TYPE
+        );
+        ```
+        
+        **Validações:**
+        - Atividade deve existir antes de modificar
+        - Se reduzir capacidade, verificar número atual de participantes
+        - Manter integridade dos dados existentes

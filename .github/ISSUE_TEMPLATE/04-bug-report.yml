@@ -1,0 +1,202 @@
+name: 🐛 Reportar Bug ou Problema
+description: Reportar um problema ou comportamento inesperado no sistema
+title: "[BUG] "
+labels: ["bug"]
+assignees:
+  - copilot
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Reportar Bug ou Problema
+        Use este formulário para reportar problemas, erros ou comportamentos inesperados no sistema.
+        
+  - type: dropdown
+    id: bug-area
+    attributes:
+      label: Área do Sistema
+      description: Onde o problema está ocorrendo?
+      options:
+        - Interface Web (Frontend)
+        - Listagem de Atividades
+        - Inscrição de Estudantes
+        - Cancelamento de Inscrição
+        - Login/Autenticação
+        - Filtros de Atividades
+        - Exibição de Detalhes
+        - API/Backend
+        - Banco de Dados
+        - Outro
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Descrição do Problema
+      description: Descreva claramente o problema que você está enfrentando
+      placeholder: "Ex: Quando tento inscrever um estudante, aparece mensagem de erro mesmo havendo vagas disponíveis"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Passos para Reproduzir
+      description: Como podemos reproduzir este problema?
+      placeholder: |
+        1. Acessar a página principal
+        2. Fazer login como professor
+        3. Clicar em "Inscrever Estudante" na atividade "Chess Club"
+        4. Inserir email do estudante
+        5. Observar erro
+      value: |
+        1. 
+        2. 
+        3. 
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Comportamento Esperado
+      description: O que deveria acontecer?
+      placeholder: "Ex: O estudante deveria ser inscrito com sucesso e aparecer na lista de participantes"
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Comportamento Atual
+      description: O que está acontecendo na realidade?
+      placeholder: "Ex: Aparece erro 'Capacidade máxima atingida' mesmo com apenas 5 de 20 vagas ocupadas"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Gravidade
+      description: Qual o impacto deste problema?
+      options:
+        - Crítico - Sistema inutilizável
+        - Alto - Funcionalidade importante não funciona
+        - Médio - Funcionalidade funciona mas com problemas
+        - Baixo - Problema cosmético ou pequeno inconveniente
+    validations:
+      required: true
+
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: Frequência
+      description: Com que frequência isso acontece?
+      options:
+        - Sempre - Acontece toda vez
+        - Frequentemente - Acontece na maioria das vezes
+        - Ocasionalmente - Acontece às vezes
+        - Raramente - Aconteceu uma ou duas vezes
+    validations:
+      required: true
+
+  - type: textarea
+    id: error-messages
+    attributes:
+      label: Mensagens de Erro
+      description: Copie e cole qualquer mensagem de erro que apareça (do navegador, console, logs)
+      placeholder: |
+        Console do navegador:
+        Error: ...
+        
+        Ou mensagem na tela:
+        "Erro ao processar solicitação"
+      render: shell
+    validations:
+      required: false
+
+  - type: input
+    id: activity-name
+    attributes:
+      label: Nome da Atividade (se aplicável)
+      description: Se o bug está relacionado a uma atividade específica, qual é?
+      placeholder: "Ex: Chess Club, Art Club"
+    validations:
+      required: false
+
+  - type: input
+    id: student-email
+    attributes:
+      label: Email do Estudante (se aplicável)
+      description: Se o bug envolve um estudante específico, qual o email?
+      placeholder: "Ex: student@mergington.edu"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Navegador (se aplicável)
+      description: Qual navegador você está usando?
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Outro
+        - Não aplicável (problema no backend)
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Contexto Adicional
+      description: Qualquer outra informação que possa ajudar a resolver o problema
+      placeholder: "Screenshots, logs adicionais, observações relevantes"
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        ### 📋 Critérios de Aceitação
+        
+        O bug será considerado resolvido quando:
+        - ✅ O problema for identificado e a causa raiz determinada
+        - ✅ A correção for implementada seguindo as boas práticas do projeto
+        - ✅ O comportamento esperado for restaurado
+        - ✅ Testes forem adicionados para prevenir regressão (se aplicável)
+        - ✅ Os testes existentes continuarem passando
+        - ✅ A correção for validada manualmente seguindo os passos de reprodução
+        
+        ### 🔧 Informações Técnicas para o Agente Copilot
+        
+        **Abordagem de Diagnóstico:**
+        1. Reproduzir o problema seguindo os passos fornecidos
+        2. Examinar logs e mensagens de erro
+        3. Identificar a camada afetada (Domain, Application, Infrastructure, Presentation)
+        4. Localizar o código responsável pelo comportamento incorreto
+        5. Implementar correção mínima necessária
+        6. Adicionar testes para validar a correção
+        
+        **Áreas Comuns de Bugs:**
+        - **Validação**: `domain/entities/`, `domain/valueobjects/`
+        - **Lógica de negócio**: `application/usecases/`
+        - **API**: `presentation/controllers/`
+        - **Dados**: `infrastructure/migrations/`, `infrastructure/persistence/`
+        - **Frontend**: `src/main/resources/static/app.js`, `style.css`, `index.html`
+        
+        **Padrões de Erro Comuns:**
+        - Validação incorreta de Email (Email.java)
+        - Verificação de capacidade (Activity.java - addParticipant())
+        - Autenticação de professor (UseCases que validam teacherUsername)
+        - Formato de dados no frontend/backend
+        
+        **Princípios para Correção:**
+        - Fazer mudanças mínimas e cirúrgicas
+        - Manter padrões arquiteturais (Clean Architecture)
+        - Validar nas camadas apropriadas (Domain para regras de negócio)
+        - Adicionar testes para prevenir regressão

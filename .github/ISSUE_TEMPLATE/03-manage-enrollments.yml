@@ -1,0 +1,137 @@
+name: 👥 Gerenciar Inscrições de Estudantes
+description: Adicionar ou remover estudantes de atividades específicas
+title: "[INSCRIÇÃO] Gerenciar estudantes em: "
+labels: ["enhancement", "inscrição"]
+assignees:
+  - copilot
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Gerenciar Inscrições de Estudantes
+        Use este formulário para adicionar ou remover estudantes de atividades extracurriculares.
+        
+  - type: input
+    id: activity-name
+    attributes:
+      label: Nome da Atividade
+      description: Em qual atividade você deseja gerenciar estudantes?
+      placeholder: "Ex: Chess Club, Art Club, Programming Class"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: action
+    attributes:
+      label: Ação Desejada
+      description: O que você deseja fazer?
+      options:
+        - Adicionar estudantes
+        - Remover estudantes
+        - Ambos (adicionar e remover)
+    validations:
+      required: true
+
+  - type: textarea
+    id: students-to-add
+    attributes:
+      label: Estudantes para Adicionar
+      description: Liste os emails dos estudantes que devem ser inscritos (um por linha)
+      placeholder: |
+        student1@mergington.edu
+        student2@mergington.edu
+        student3@mergington.edu
+    validations:
+      required: false
+
+  - type: textarea
+    id: students-to-remove
+    attributes:
+      label: Estudantes para Remover
+      description: Liste os emails dos estudantes que devem ser removidos (um por linha)
+      placeholder: |
+        oldstudent1@mergington.edu
+        oldstudent2@mergington.edu
+    validations:
+      required: false
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: Motivo
+      description: Por que essas alterações são necessárias?
+      placeholder: "Ex: Novos estudantes interessados, estudante transferido, conflito de horário"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: verify-capacity
+    attributes:
+      label: Verificação de Capacidade
+      description: Confirme que você verificou a capacidade da atividade
+      options:
+        - label: Verifiquei que há vagas suficientes para os novos estudantes
+          required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        ### 📋 Critérios de Aceitação
+        
+        O gerenciamento de inscrições será considerado completo quando:
+        - ✅ A atividade especificada for localizada no sistema
+        - ✅ Todos os estudantes listados para adicionar forem inscritos com sucesso
+        - ✅ Todos os estudantes listados para remover forem desincritos
+        - ✅ A capacidade máxima da atividade não for excedida
+        - ✅ Emails inválidos ou duplicados forem tratados adequadamente
+        - ✅ As mudanças forem refletidas na interface web
+        - ✅ As mudanças forem persistidas no banco de dados
+        
+        ### 🔧 Informações Técnicas para o Agente Copilot
+        
+        **Arquivos a modificar:**
+        - `src/main/java/com/mergingtonhigh/schoolmanagement/infrastructure/migrations/V001_InitialDatabaseSetup.java` - Atualizar lista de participantes
+        
+        **Abordagem:**
+        1. Localizar a atividade pelo nome no código de migration
+        2. Para adicionar: adicionar emails à lista de participantes usando `setParticipants()` ou modificando a lista
+        3. Para remover: remover emails da lista de participantes
+        4. Validar que a capacidade máxima não será excedida
+        5. Validar formato dos emails (devem ser @mergington.edu)
+        
+        **Padrão de código:**
+        ```java
+        // Localizar a atividade
+        Activity activity = mongoTemplate.findOne(
+            Query.query(Criteria.where("name").is("Nome da Atividade")),
+            Activity.class
+        );
+        
+        // Obter lista atual e adicionar/remover
+        List<String> participants = new ArrayList<>(activity.getParticipants());
+        participants.add("novoemail@mergington.edu");
+        participants.remove("emailremover@mergington.edu");
+        activity.setParticipants(participants);
+        
+        // Ou definir lista completa diretamente
+        activity.setParticipants(List.of(
+            "student1@mergington.edu",
+            "student2@mergington.edu",
+            "student3@mergington.edu"
+        ));
+        
+        mongoTemplate.save(activity);
+        ```
+        
+        **Validações necessárias:**
+        - Atividade deve existir
+        - Emails devem ter formato válido (@mergington.edu)
+        - Número total de participantes não pode exceder `maxParticipants`
+        - Não permitir emails duplicados
+        
+        **Nota:** A funcionalidade de inscrição/desinscrição via API já existe nos endpoints:
+        - POST `/activities/{activityName}/signup`
+        - POST `/activities/{activityName}/unregister`
+        
+        Esta issue trata de modificar os dados iniciais (seed data) no migration.
