@@ -210,7 +210,7 @@ public class V001_InitialDatabaseSetup {
                 // Clube de Mangá
                 Activity mangaClub = new Activity(
                                 "Clube de Mangá",
-                                "Leia, discuta e desenhe mangá com outros entusiastas",
+                                "Descubra o universo dos mangás japoneses! Explore histórias épicas de aventura, desenhe seus próprios personagens e compartilhe sua paixão por obras clássicas como Naruto, One Piece e Dragon Ball",
                                 "Quartas-feiras, 15:30 - 17:00",
                                 new ScheduleDetails(List.of("Wednesday"), LocalTime.of(15, 30), LocalTime.of(17, 0)),
                                 15,
